@@ -7,8 +7,7 @@ use Mix.Config
 
 # General application configuration
 config :rumbl,
-  ecto_repos: []#[Rumbl.Repo]
-
+  ecto_repos: [Rumbl.Repo]
 
 config :junit_formatter,
   report_file: "results.xml",
