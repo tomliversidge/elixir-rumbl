@@ -1,6 +1,7 @@
 defmodule Rumbl.Auth do
   import Plug.Conn
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
+  import Phoenix.Controller
   alias Rumbl.Router.Helpers
 
   def authenticate_user(conn, _opts) do
@@ -8,8 +9,8 @@ defmodule Rumbl.Auth do
       conn
     else
       conn
-      |> Helpers.put_flash(:error, "You must be logged in to access that page")
-      |> Helpers.redirect(to: Helpers.page_path(conn, :index))
+      |> put_flash(:error, "You must be logged in to access that page")
+      |> redirect(to: Helpers.page_path(conn, :index))
       |> halt()
     end
   end
@@ -20,8 +21,14 @@ defmodule Rumbl.Auth do
 
   def call(conn, repo) do
     user_id = get_session(conn, :user_id)
-    user = user_id && repo.get(Rumbl.User, user_id)
-    assign(conn, :current_user, user)
+    cond do
+      user = conn.assigns[:current_user] -> conn
+      user = user_id && repo.get(Rumbl.User, user_id) ->
+        assign(conn, :current_user, user)
+      true ->
+        assign(conn, :current_user, nil)
+    end
+
   end
 
   def login(conn, user) do
@@ -38,7 +45,7 @@ defmodule Rumbl.Auth do
       user && checkpw(password, user.password_hash) ->
         {:ok, login(conn, user)}
       user ->
-        {:error, :unautherized, conn}
+        {:error, :unauthorized, conn}
       true ->
         dummy_checkpw()
         {:error, :not_found, conn}

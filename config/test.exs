@@ -10,10 +10,10 @@ config :rumbl, Rumbl.Endpoint,
 config :logger, level: :warn
 
 # Configure your database
-# config :rumbl, Rumbl.Repo,
-#   adapter: Ecto.Adapters.Postgres,
-#   username: "tomliversidge",
-#   password: "",
-#   database: "rumbl_test",
-#   hostname: "localhost",
-#   pool: Ecto.Adapters.SQL.Sandbox
+config :rumbl, Rumbl.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: "tomliversidge",
+  password: "",
+  database: "rumbl_test",
+  hostname: "localhost",
+  pool: Ecto.Adapters.SQL.Sandbox
