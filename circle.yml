@@ -36,7 +36,7 @@ test:
   override:
     - MIX_ENV=circleci mix test
     - mkdir -p $CIRCLE_TEST_REPORTS/exunit
-    - cp _build/test/lib/rumbl/results.xml $CIRCLE_TEST_REPORTS/exunit
+    - cp _build/circleci/lib/rumbl/results.xml $CIRCLE_TEST_REPORTS/exunit
 
 deployment:
   staging:

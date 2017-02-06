@@ -13,8 +13,6 @@ defmodule Rumbl.Mixfile do
      deps: deps()]
   end
 
-  defp elixirc_paths(:circleci), do: ["lib", "web", "test/support"]
-
   # Configuration for the OTP application.
   #
   # Type `mix help compile.app` for more information.
@@ -26,6 +24,7 @@ defmodule Rumbl.Mixfile do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
+  defp elixirc_paths(:circleci), do: ["lib", "web", "test/support"]
   defp elixirc_paths(_),     do: ["lib", "web"]
 
   # Specifies your project dependencies.
