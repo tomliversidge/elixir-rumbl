@@ -4,7 +4,7 @@ machine:
   environment:
     PATH: "$HOME/.asdf/bin:$HOME/.asdf/shims:$PATH"
     MIX_ENV: "test"
-  service:
+  services:
     - postgresql
 
 database:
