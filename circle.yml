@@ -42,4 +42,4 @@ deployment:
   staging:
     branch: master
     heroku:
-      appname: dry-plateau-59353
+      appname: frozen-gorge-31484
