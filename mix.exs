@@ -13,6 +13,8 @@ defmodule Rumbl.Mixfile do
      deps: deps()]
   end
 
+  defp elixirc_paths(:circleci), do: ["lib", "web", "test/support"]
+
   # Configuration for the OTP application.
   #
   # Type `mix help compile.app` for more information.
