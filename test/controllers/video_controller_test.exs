@@ -43,9 +43,9 @@ description: "a vid"}
       delete(conn, video_path(conn, :delete, video))
     end
   end
-  
+
   @tag login_as: "max"
-  test "creates user video and redirects", %{conn: conn, user: user} do
+  test "creates user video and redirects", %{conn: conn, user: _user} do
     conn = post conn, video_path(conn, :create), video: @valid_attrs
     assert redirected_to(conn) == video_path(conn, :index)
     assert Repo.get_by!(Video, @valid_attrs)
