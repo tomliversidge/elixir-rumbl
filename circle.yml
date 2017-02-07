@@ -10,8 +10,7 @@ machine:
 database:
   override:
     - createdb test
-    - echo "CREATE ROLE api WITH UNENCRYPTED PASSWORD 'password';" | psql -U postgres
-    - echo "ALTER ROLE api WITH LOGIN CREATEDB;" | psql -U postgres
+    - echo "CREATE ROLE api WITH UNENCRYPTED PASSWORD 'password' LOGIN CREATEDB;" | psql -U postgres
     - echo "GRANT CREATE, CONNECT ON DATABASE test TO api;" | psql -U postgres
 
 dependencies:
