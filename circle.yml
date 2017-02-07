@@ -34,7 +34,7 @@ dependencies:
 
 test:
   override:
-    - MIX_ENV=circleci mix test
+    - MIX_ENV=circleci mix coveralls.circle
     - mkdir -p $CIRCLE_TEST_REPORTS/exunit
     - cp _build/circleci/lib/rumbl/results.xml $CIRCLE_TEST_REPORTS/exunit
 

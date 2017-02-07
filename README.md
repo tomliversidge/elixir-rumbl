@@ -1,5 +1,10 @@
 # Rumbl
 
+[![CircleCI](https://circleci.com/gh/tomliversidge/elixir-rumbl.svg?style=svg)](https://circleci.com/gh/tomliversidge/elixir-rumbl)
+
+[![Coverage Status](https://coveralls.io/repos/github/tomliversidge/elixir-rumbl/badge.svg?branch=master)](https://coveralls.io/github/tomliversidge/elixir-rumbl?branch=master)
+
+
 To start your Phoenix app:
 
   * Install dependencies with `mix deps.get`
