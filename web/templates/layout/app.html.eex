@@ -20,6 +20,9 @@
               <%= @current_user.username %>
             </li>
             <li>
+              <%= link "My Videos", to: video_path(@conn, :index)%>
+            </li>
+            <li>
               <%= link "Log Out", to: session_path(@conn, :delete, @current_user), method: "delete" %>
             </li>
           <% else %>
@@ -42,6 +45,8 @@
       </main>
 
     </div> <!-- /container -->
+    <script>window.userToken = "<%= assigns[:user_token] %>"
+    </script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
