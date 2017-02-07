@@ -13,7 +13,6 @@ database:
     - echo "CREATE ROLE api WITH UNENCRYPTED PASSWORD 'password';" | psql -U postgres
     - echo "ALTER ROLE api WITH LOGIN CREATEDB;" | psql -U postgres
     - echo "GRANT USAGE ON SCHEMA public to api;" | psql -U postgres
-    - echo "GRANT ALL PRIVILEGES ON DATABASE test to api;" | psql -U postgres
     - echo "GRANT CREATE, CONNECT ON DATABASE test TO api;" | psql -U postgres
 
 dependencies:
