@@ -9,9 +9,9 @@ machine:
 
 database:
   override:
-    - createdb test
-    - echo "CREATE ROLE api WITH UNENCRYPTED PASSWORD 'password' LOGIN CREATEDB;" | psql -U postgres
-    
+    - createdb ci-tests
+    - echo "CREATE ROLE ci-tests-user WITH UNENCRYPTED PASSWORD 'password' LOGIN CREATEDB;" | psql -U postgres
+
 dependencies:
   cache_directories:
     - ~/.asdf
