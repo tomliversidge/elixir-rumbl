@@ -12,9 +12,9 @@ config :logger, level: :warn
 # Configure your database
 config :rumbl, Rumbl.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "ci-tests-user",
+  username: "ci_tests_user",
   password: "password",
-  database: "ci-tests",
+  database: "ci_tests",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
