@@ -21,6 +21,13 @@ config :rumbl, Rumbl.Endpoint,
   pubsub: [name: Rumbl.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+config :sentry,
+  dsn: System.get_env("SENTRY_DSN") || "https://public:secret@app.getsentry.com/1",
+  environment_name: :prod,
+  tags: %{
+   env: "production"
+  },
+  included_environments: [:prod]
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

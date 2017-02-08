@@ -53,7 +53,8 @@ defmodule Rumbl.Mixfile do
      {:junit_formatter, ">= 0.0.0"},
      {:comeonin, "~> 2.0"},
      {:excoveralls, "~> 0.5", only: [:test, :circleci]},
-     {:sentry, "~> 2.0.2"}]
+     {:sentry, "~> 2.0.2"},
+     {:credo, "~> 0.3", only: [:dev]}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

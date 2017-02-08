@@ -18,13 +18,6 @@ config :rumbl, Rumbl.Endpoint,
   cache_static_manifest: "priv/static/manifest.json",
   secret_key_base: System.get_env("SECRET_KEY_BASE")
 
-config :sentry,
-  dsn: System.get_env("SENTRY_DSN"),
-  environment_name: :prod,
-  tags: %{
-    env: "production"
-  },
-  included_environments: [:prod]
 
 # Do not print debug messages in production
 config :logger, level: :info
