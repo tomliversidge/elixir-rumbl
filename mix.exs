@@ -54,7 +54,7 @@ defmodule Rumbl.Mixfile do
      {:comeonin, "~> 2.0"},
      {:excoveralls, "~> 0.5", only: [:test, :circleci]},
      {:sentry, "~> 2.0.2"},
-     {:credo, "~> 0.3", only: [:dev]}]
+     {:credo, "~> 0.3", only: [:dev, :test]}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
@@ -67,7 +67,7 @@ defmodule Rumbl.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      "test": ["ecto.create --quiet", "ecto.migrate", "test"]
+      "test": ["ecto.create --quiet", "ecto.migrate", "credo", "test"]
     ]
   end
 end
