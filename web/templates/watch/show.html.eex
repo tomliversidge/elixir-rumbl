@@ -17,7 +17,7 @@
         <textarea id="msg-input"
         rows="3"
         class="form-control"
-        placeholder="Comments..."></textarea>
+        placeholder="Comments... (you can type /help followed by a question)"></textarea>
         <button id="msg-submit" class="btn btn-primary from-control" type="submit">
           Post
         </button>

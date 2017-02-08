@@ -54,7 +54,8 @@ defmodule Rumbl.Mixfile do
      {:comeonin, "~> 2.0"},
      {:excoveralls, "~> 0.5", only: [:test, :circleci]},
      {:sentry, "~> 2.0.2"},
-     {:credo, "~> 0.3", only: [:dev, :test, :circleci]}]
+     {:credo, "~> 0.3", only: [:dev, :test, :circleci]},
+     {:sweet_xml, "~> 0.5.0"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
