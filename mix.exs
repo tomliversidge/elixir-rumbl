@@ -19,8 +19,17 @@ defmodule Rumbl.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Rumbl, []},
-     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :comeonin]]
+     applications: [
+       :phoenix,
+       :phoenix_pubsub,
+       :phoenix_html,
+       :cowboy,
+       :sentry,
+       :logger,
+       :gettext,
+       :phoenix_ecto,
+       :postgrex,
+       :comeonin]]
   end
 
   # Specifies which paths to compile per environment.
@@ -43,7 +52,8 @@ defmodule Rumbl.Mixfile do
      {:ex_doc, "~> 0.14", only: :dev},
      {:junit_formatter, ">= 0.0.0"},
      {:comeonin, "~> 2.0"},
-     {:excoveralls, "~> 0.5", only: [:test, :circleci]}]
+     {:excoveralls, "~> 0.5", only: [:test, :circleci]},
+     {:sentry, "~> 2.0.2"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
@@ -53,9 +63,10 @@ defmodule Rumbl.Mixfile do
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
-    ["ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-     "ecto.reset": ["ecto.drop", "ecto.setup"],
-     "test": ["ecto.create --quiet", "ecto.migrate", "test"],
-     "test_and_cover": ["test", "coveralls.circle"]]
+    [
+      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.reset": ["ecto.drop", "ecto.setup"],
+      "test": ["ecto.create --quiet", "ecto.migrate", "test"]
+    ]
   end
 end
