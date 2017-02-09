@@ -31,4 +31,15 @@ defmodule Rumbl.VideoStreamTest do
     assert VideoStream.joined?(1, "tester1")
     assert VideoStream.joined?(1, "tester2")
   end
+
+  test "multiple users can join multiple streams" do
+    VideoStream.join(1, "tester1")
+    VideoStream.join(1, "tester2")
+    VideoStream.join(2, "tester2")
+    assert VideoStream.subscribers(1) === 2
+    assert VideoStream.subscribers(2) === 1
+    assert VideoStream.joined?(1, "tester1")
+    assert VideoStream.joined?(1, "tester2")
+    assert VideoStream.joined?(2, "tester2")
+  end
 end
