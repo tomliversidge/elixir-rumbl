@@ -1,4 +1,4 @@
-defmodule Rumbl.VideoStatsTests do
+defmodule Rumbl.VideoStreamTest do
   use ExUnit.Case
   alias Rumbl.VideoStream
 

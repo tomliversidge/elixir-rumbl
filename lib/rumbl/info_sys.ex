@@ -1,6 +1,7 @@
 defmodule Rumbl.InfoSys do
   @backends [Rumbl.InfoSys.Wolfram]
-
+  require Logger
+  
   defmodule Result do
     defstruct score: 0, text: nil, url: nil, backend: nil
   end
@@ -56,6 +57,7 @@ defmodule Rumbl.InfoSys do
         await_result(tail, acc, timeout)
       :timedout ->
         IO.puts "timed out!"
+        Logger.warn("info_sys call timed out", head)
         kill(pid, monitor_ref)
         await_result(tail, acc, 0)
       after
