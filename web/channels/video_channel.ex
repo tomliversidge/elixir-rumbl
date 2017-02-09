@@ -82,11 +82,4 @@ end
         end
     end
   end
-
-  # %{
-  #   id: annotation.id,
-  #   user: Rumbl.UserView.render("user.json", %{user: user}),
-  #   body: annotation.body,
-  #   at: annotation.at
-  # }
 end
