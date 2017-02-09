@@ -22,11 +22,8 @@ defmodule Rumbl.VideoStream do
   end
 
   def subscribers(video_id) do
-    Agent.get(__MODULE__, get_subscribers_for_video(video_id))
+    Agent.get(__MODULE__, &(get_subscribers_for_video(&1, video_id)))
   end
-
-  defp get_subscribers_for_video(video_id), do: fn mapset ->
-      get_subscribers_for_video(mapset, video_id) end
 
   defp get_subscribers_for_video(mapset, video_id) do
     Enum.count(mapset, fn value ->
