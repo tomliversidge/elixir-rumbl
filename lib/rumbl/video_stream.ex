@@ -26,16 +26,20 @@ defmodule Rumbl.VideoStream do
   end
 
   defp get_subscribers_for_video(mapset, video_id) do
-    Enum.count(mapset, fn value ->
+    mapset
+    |> Enum.filter(fn value ->
       case value do
         {^video_id, _} -> true
         {_, _} -> false
       end
     end)
+    |> Enum.map(fn {_, user} ->
+       user
+    end)
   end
 
   def reset do
-    Agent.update(__MODULE__, fn mapset ->
+    Agent.update(__MODULE__, fn _ ->
       MapSet.new
     end)
   end
