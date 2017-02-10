@@ -25,17 +25,16 @@ defmodule Rumbl.VideoStream do
     Agent.get(__MODULE__, &(get_subscribers_for_video(&1, video_id)))
   end
 
+  defp filter_by_video_id({vid, _}, video_id), do: vid === video_id
+
+  defp map_user({_, user}), do: user
+
   defp get_subscribers_for_video(mapset, video_id) do
     mapset
-    |> Enum.filter(fn value ->
-      case value do
-        {^video_id, _} -> true
-        {_, _} -> false
-      end
-    end)
-    |> Enum.map(fn {_, user} ->
-       user
-    end)
+    |> Enum.filter_map(
+      &(filter_by_video_id(&1, video_id)),
+      &map_user/1
+      )
   end
 
   def reset do
