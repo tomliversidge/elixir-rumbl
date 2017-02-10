@@ -42,13 +42,14 @@ defmodule Rumbl.VideoChannel do
   end
 
 defp check_for_commands(socket, annotation) do
-  Enum.each(@commands, fn cmd ->
-    if String.contains?(annotation.body, cmd <> " ") do
-      annotation = %{annotation | body: strip(annotation.body, cmd <> " ")}
-      Task.start_link(fn -> compute_additional_info(annotation, socket) end)
-    end
+  Enum.each(@commands, &(try_execute_command(&1, socket, annotation)))
+end
+
+defp try_execute_command(cmd, socket, annotation) do
+  if String.contains?(annotation.body, cmd <> " ") do
+    annotation = %{annotation | body: strip(annotation.body, cmd <> " ")}
+    Task.start_link(fn -> compute_additional_info(annotation, socket) end)
   end
-  )
 end
 
 def strip(full, prefix) do
@@ -63,7 +64,6 @@ end
     %{
       annotation: annotation
       })
-
     broadcast! socket, "new_annotation", render_annotation
   end
 
@@ -72,7 +72,8 @@ end
     timeout: 10_000) do
       attrs = %{url: result.url, body: result.text, at: ann.at}
       info_changeset =
-        Repo.get_by!(Rumbl.User, username: result.backend)
+        Rumbl.User
+        |> Repo.get_by!(username: result.backend)
         |> build_assoc(:annotations, video_id: ann.video_id)
         |> Rumbl.Annotation.changeset(attrs)
 
