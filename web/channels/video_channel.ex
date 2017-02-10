@@ -1,5 +1,6 @@
 defmodule Rumbl.VideoChannel do
   use Rumbl.Web, :channel
+  alias Rumbl.VideoStream
   alias Rumbl.AnnotationView
   @commands ["wat", "help"]
 
@@ -7,7 +8,7 @@ defmodule Rumbl.VideoChannel do
     last_seen_id = params["last_seen_id"] || 0
     video_id = String.to_integer(video_id)
     video = Repo.get!(Rumbl.Video, video_id)
-
+    VideoStream.join(video_id, socket.assigns.user_id)
     annotations = Repo.all(
       from a in assoc(video, :annotations),
       where: a.id > ^last_seen_id,
@@ -15,7 +16,10 @@ defmodule Rumbl.VideoChannel do
       limit: 200,
       preload: [:user]
     )
-    resp = %{annotations: Phoenix.View.render_many(annotations, AnnotationView, "annotation.json")}
+    resp = %{
+      subscribers: VideoStream.subscribers(video_id),
+      annotations: Phoenix.View.render_many(annotations, AnnotationView, "annotation.json")
+    }
 
     {:ok, resp, assign(socket, :video_id, video_id)}
   end
@@ -41,22 +45,22 @@ defmodule Rumbl.VideoChannel do
     end
   end
 
-defp check_for_commands(socket, annotation) do
-  Enum.each(@commands, &(try_execute_command(&1, socket, annotation)))
-end
-
-defp try_execute_command(cmd, socket, annotation) do
-  if String.contains?(annotation.body, cmd <> " ") do
-    annotation = %{annotation | body: strip(annotation.body, cmd <> " ")}
-    Task.start_link(fn -> compute_additional_info(annotation, socket) end)
+  defp check_for_commands(socket, annotation) do
+    Enum.each(@commands, &(try_execute_command(&1, socket, annotation)))
   end
-end
 
-def strip(full, prefix) do
-  base = byte_size(prefix)
-  <<_::binary-size(base), rest::binary>> = full
-  rest
-end
+  defp try_execute_command(cmd, socket, annotation) do
+    if String.contains?(annotation.body, cmd <> " ") do
+      annotation = %{annotation | body: strip(annotation.body, cmd <> " ")}
+      Task.start_link(fn -> compute_additional_info(annotation, socket) end)
+    end
+  end
+
+  def strip(full, prefix) do
+    base = byte_size(prefix)
+    <<_::binary-size(base), rest::binary>> = full
+    rest
+  end
 
   defp broadcast_annotation(socket, annotation) do
     annotation = Repo.preload(annotation, :user)

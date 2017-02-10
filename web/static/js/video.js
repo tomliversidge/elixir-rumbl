@@ -16,6 +16,7 @@ let Video = {
     let msgContainer = document.getElementById("msg-container")
     let msgInput = document.getElementById("msg-input")
     let postButton = document.getElementById("msg-submit")
+    let currentSubscribers = document.getElementById("current-subscribers")
     let vidChannel = socket.channel("videos:" + videoId)
 
     postButton.addEventListener("click", e => {
@@ -41,6 +42,8 @@ let Video = {
     })
     vidChannel.join()
       .receive("ok", resp => {
+        let subscribers = resp.subscribers
+        currentSubscribers.innerHTML = `${subscribers} people watching`
         let ids = resp.annotations.map(ann => ann.id)
         if (ids.length > 0) {
           vidChannel.params.last_seen_id = Math.max(...ids)

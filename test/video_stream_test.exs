@@ -2,8 +2,8 @@ defmodule Rumbl.VideoStreamTest do
   use ExUnit.Case
   alias Rumbl.VideoStream
 
-  setup %{} do
-    VideoStream.start_link()
+  setup do
+    VideoStream.reset()
     :ok
   end
 

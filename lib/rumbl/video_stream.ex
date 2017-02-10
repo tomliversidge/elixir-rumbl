@@ -33,4 +33,10 @@ defmodule Rumbl.VideoStream do
       end
     end)
   end
+
+  def reset do
+    Agent.update(__MODULE__, fn mapset ->
+      MapSet.new
+    end)
+  end
 end

@@ -7,6 +7,9 @@
   </div>
   <div class="col-sm-5">
     <div class="panel panel-default">
+      <div id="current-subscribers">
+
+      </div>
       <div class="panel-heading">
         <h3 class="panel-title">Annotations</h3>
       </div>
