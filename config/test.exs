@@ -9,6 +9,9 @@ config :rumbl, Rumbl.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+config :rumbl, :wolfram,
+  app_id: "1234",
+  http_client: Rumbl.Test.HTTPClient
 # Configure your database
 config :rumbl, Rumbl.Repo,
   adapter: Ecto.Adapters.Postgres,
