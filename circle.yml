@@ -32,8 +32,9 @@ test:
   override:
     - MIX_ENV=circleci mix coveralls.circle
     - mkdir -p $CIRCLE_TEST_REPORTS/junit
+    - mkdir -p $CIRCLE_ARTIFACTS/code_coverage
     - cp _build/test/lib/rumbl/results.xml $CIRCLE_TEST_REPORTS/junit
-
+    - cp cover/excoveralls.html $CIRCLE_ARTIFACTS/code_coverage
 deployment:
   staging:
     branch: master
