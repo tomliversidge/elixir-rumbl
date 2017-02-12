@@ -1,28 +1,50 @@
 defmodule Rumbl.Channels.VideoChannelTest do
   use Rumbl.ChannelCase
-  import Rumbl.TestHelpers
+ import Rumbl.TestHelpers
 
-  setup do
-    user = insert_user(name: "Rebecca")
-    video = insert_video(user, title: "Testing")
-    token = Phoenix.Token.sign(@endpoint, "user socket", user.id)
-    {:ok, socket} = connect(Rumbl.UserSocket, %{"token" => token})
-    {:ok, socket: socket, user: user, video: video}
-  end
+ setup do
+   user = insert_user(name: "Gary")
+   video = insert_video(user, title: "Testing")
+   token = Phoenix.Token.sign(@endpoint, "user socket", user.id)
+   {:ok, socket} = connect(Rumbl.UserSocket, %{"token" => token})
 
-  test "join replies with video annotations", %{socket: socket, video: vid} do
-    for body <- ~w(one, two) do
-      vid
-      |> build_assoc(:annotations, %{body: body})
-      |> Repo.insert!()
-    end
-    {:ok, reply, socket} = subscribe_and_join(socket, "videos:#{vid.id}", %{})
+   {:ok, socket: socket, user: user, video: video}
+ end
 
-    assert socket.assigns.video_id == vid.id
-    annotations = Map.get(reply, :annotations)
-    first_annotation = Enum.at(annotations, 0)
-    assert first_annotation = %{body: "one"}
-    second_annotation = Enum.at(annotations, 1)
-    assert second_annotation = %{body: "two"}
-  end
+ test "join replies with video annotations", %{socket: socket, video: vid} do
+   for body <- ~w(one two) do
+     vid
+     |> build_assoc(:annotations, %{body: body})
+     |> Repo.insert!()
+   end
+   {:ok, reply, socket} = subscribe_and_join(socket, "videos:#{vid.id}", %{})
+
+   assert socket.assigns.video_id == vid.id
+   assert %{annotations: [%{body: "one"}, %{body: "two"}]} = reply
+ end
+
+ test "inserting new annotations", %{socket: socket, video: vid} do
+   {:ok, _, socket} = subscribe_and_join(socket, "videos:#{vid.id}", %{})
+   ref = push socket, "new_annotation", %{body: "the body", at: 0}
+   assert_reply ref, :ok, %{}
+   assert_broadcast "new_annotation", %{}
+ end
+
+ test "annotation with command triggers InfoSys", %{socket: socket, video: vid} do
+   insert_user(username: "wolfram")
+   {:ok, _, socket} = subscribe_and_join(socket, "videos:#{vid.id}", %{})
+   ref = push socket, "new_annotation", %{body: "/wat 1 + 1", at: 123}
+   assert_reply ref, :ok, %{}
+   assert_broadcast "new_annotation", %{body: "/wat 1 + 1", at: 123}
+   assert_broadcast "new_annotation", %{body: "2", at: 123}
+ end
+
+ test "annotation without command does not trigger InfoSys", %{socket: socket, video: vid} do
+   insert_user(username: "wolfram")
+   {:ok, _, socket} = subscribe_and_join(socket, "videos:#{vid.id}", %{})
+   ref = push socket, "new_annotation", %{body: "1 + 1", at: 123}
+   assert_reply ref, :ok, %{}
+   assert_broadcast "new_annotation", %{body: "1 + 1", at: 123}
+   refute_broadcast "new_annotation", %{body: "2", at: 123}
+ end
 end

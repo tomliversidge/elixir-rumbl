@@ -13,7 +13,6 @@ defmodule Rumbl.InfoSys do
   def compute(query, opts \\ []) do
     limit = opts[:limit] || 10
     backends = opts[:backends] || @backends
-
     backends
     |> Enum.map(&spawn_query(&1, query, limit))
     |> await_results(opts)

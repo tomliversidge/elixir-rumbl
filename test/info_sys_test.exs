@@ -15,7 +15,7 @@ defmodule Rumbl.InfoSysTest do
       send(owner, [:results, ref, []])
     end
 
-    def fetch("timeout", ref, owner, _limit) do
+    def fetch("timeout", _ref, owner, _limit) do
       send(owner, {:backend, self()})
       :timer.sleep(:infinity)
     end
