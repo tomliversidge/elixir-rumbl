@@ -1,4 +1,4 @@
-defmodule Rumbl.PageController do
+defmodule Rumbl.HomeController do
   use Rumbl.Web, :controller
 
   def index(conn, _params) do
