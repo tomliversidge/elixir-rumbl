@@ -40,9 +40,9 @@ defmodule Rumbl.Web do
     end
   end
 
-  def view do
+  def view(opts \\ [root: "web/templates"]) do
     quote do
-      use Phoenix.View, root: "web/templates"
+      use Phoenix.View, unquote(opts)
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1]
@@ -80,4 +80,8 @@ defmodule Rumbl.Web do
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
   end
+  defmacro __using__({fun, opts}) do
+    apply(__MODULE__, fun, [opts])
+  end
+
 end
