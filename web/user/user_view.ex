@@ -1,5 +1,5 @@
 defmodule Rumbl.UserView do
-  use Rumbl.Web, :view
+  use Rumbl.Web, {:view, %{root: "web/user/templates", path: ""}}
   alias Rumbl.User
 
   def first_name(%User{name: name}) do
