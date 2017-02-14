@@ -1,5 +1,5 @@
-defmodule Rumbl.WatchView do
-  use Rumbl.Web, {:view, %{root: "web/video/watch", path: ""}}
+defmodule Rumbl.VideoViewerView do
+  use Rumbl.Web, {:view, %{root: "web/video_viewer", path: ""}}
 
   def player_id(video) do
     ~r{^.*(?:youtu\.be/|\w+/|v=)(?<id>[^#&?]*)}
