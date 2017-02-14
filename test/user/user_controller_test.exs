@@ -62,5 +62,4 @@ defmodule Rumbl.UserControllerTest do
         assert conn.halted
       end)
   end
-
 end
