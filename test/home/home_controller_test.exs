@@ -1,4 +1,4 @@
-defmodule Rumbl.PageControllerTest do
+defmodule Rumbl.HomeControllerTest do
   use Rumbl.ConnCase
 
   test "GET /", %{conn: conn} do

@@ -1,3 +1,3 @@
-defmodule Rumbl.PageViewTest do
+defmodule Rumbl.HomeViewTest do
   use Rumbl.ConnCase, async: true
 end

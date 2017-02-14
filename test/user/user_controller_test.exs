@@ -24,7 +24,7 @@ defmodule Rumbl.UserControllerTest do
 
   @tag login_as: "tester1"
   test "when logged in shows all users", %{conn: conn, user: user} do
-    user2 = insert_user(username: "tester2")
+    insert_user(username: "tester2")
     conn = get conn, user_path(conn, :index)
     assert html_response(conn, 200) =~ user.username
   end
