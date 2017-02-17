@@ -3,7 +3,7 @@ machine:
     version: 6.2.0
   environment:
     PATH: "$HOME/.asdf/bin:$HOME/.asdf/shims:$PATH"
-    MIX_ENV: "test"
+    MIX_ENV: "circleci"
   services:
     - postgresql
 

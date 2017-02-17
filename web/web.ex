@@ -80,8 +80,8 @@ defmodule Rumbl.Web do
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
   end
-  defmacro __using__({fun, opts}) do
-    apply(__MODULE__, fun, [opts])
+  defmacro __using__({which, opts}) when is_atom(which) do
+    apply(__MODULE__, which, [opts])
   end
 
 end
